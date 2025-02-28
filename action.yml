@@ -1,0 +1,19 @@
+name: 'Readme Linter'
+description: 'Validates README files in modules using super-linter'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Load super-linter configuration
+      shell: bash
+      run: cat .github/super-linter.env >> "$GITHUB_ENV"
+
+    - name: Lint Code Base
+      uses: super-linter/super-linter/slim@v7.2.1
+      env:
+        GITHUB_TOKEN: ${{ github.token }} 
