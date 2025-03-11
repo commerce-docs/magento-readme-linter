@@ -27,7 +27,6 @@ runs:
         # VALIDATE_ALL_CODEBASE: false
         # FILTER_REGEX_INCLUDE: README\.md$
         # LOG_LEVEL: DEBUG
-        SAVE_SUPER_LINTER_OUTPUT: true
       continue-on-error: true
 
     - name: Report linting results with reviewdog
