@@ -27,14 +27,15 @@ runs:
         # VALIDATE_ALL_CODEBASE: false
         # FILTER_REGEX_INCLUDE: README\.md$
         # LOG_LEVEL: DEBUG
-        SAVE_SUPER_LINTER_SUMMARY: true
+        SAVE_SUPER_LINTER_OUTPUT: true
+        DISABLE_ERRORS: true
 
     - name: Report linting results with reviewdog
       shell: bash
       if: always()
       run: |
-        if [ -f "/github/workspace/super-linter.report" ]; then
-          cat "/github/workspace/super-linter.report" | reviewdog -f=super-linter -reporter=github-pr-review -fail-on-error=false
+        if [ -f "/github/workspace/super-linter.output" ]; then
+          cat "/github/workspace/super-linter.output" | reviewdog -f=super-linter -reporter=github-pr-review -fail-on-error=false
         fi
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ github.token }}
