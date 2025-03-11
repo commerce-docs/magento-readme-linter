@@ -28,11 +28,10 @@ runs:
         # FILTER_REGEX_INCLUDE: README\.md$
         # LOG_LEVEL: DEBUG
         SAVE_SUPER_LINTER_OUTPUT: true
-        DISABLE_ERRORS: true
+      continue-on-error: true
 
     - name: Report linting results with reviewdog
       shell: bash
-      if: always()
       run: |
         if [ -f "/github/workspace/super-linter.output" ]; then
           cat "/github/workspace/super-linter.output" | reviewdog -f=super-linter -reporter=github-pr-review -fail-on-error=false
