@@ -9,10 +9,10 @@ runs:
       with:
         fetch-depth: 0
 
-    - name: Setup reviewdog
-      uses: reviewdog/action-setup@v1
-      with:
-        reviewdog_version: latest
+    # - name: Setup reviewdog
+    #   uses: reviewdog/action-setup@v1
+    #   with:
+    #     reviewdog_version: latest
 
     - name: Load super-linter configuration
       shell: bash
@@ -32,7 +32,7 @@ runs:
     - name: Report linting results with reviewdog
       shell: bash
       run: |
-        cat "${DEFAULT_WORKSPACE}/${SUPER_LINTER_OUTPUT_DIRECTORY_NAME}/super-linter"
+        ls "${DEFAULT_WORKSPACE}/${SUPER_LINTER_OUTPUT_DIRECTORY_NAME}/"
       #   if [ -f "${DEFAULT_WORKSPACE}/${SUPER_LINTER_OUTPUT_DIRECTORY_NAME}/super-linter" ]; then
       #     cat "${DEFAULT_WORKSPACE}/${SUPER_LINTER_OUTPUT_DIRECTORY_NAME}/super-linter" | reviewdog -f=super-linter -reporter=github-pr-review -fail-on-error=false
       #   fi
