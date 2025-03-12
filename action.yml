@@ -36,6 +36,7 @@ runs:
         ls super-linter-output/super-linter/
         TMPFILE=$(mktemp)
         git diff > "${TMPFILE}"
+        cat "${TMPFILE}"
         git stash -u
         reviewdog                        \
           -f=diff                        \
