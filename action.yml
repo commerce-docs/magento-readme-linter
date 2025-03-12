@@ -28,7 +28,7 @@ runs:
         # VALIDATE_ALL_CODEBASE: false
         # FILTER_REGEX_INCLUDE: README\.md$
         # LOG_LEVEL: DEBUG
-      continue-on-error: true
+      # continue-on-error: true
 
     - name: Report linting results with reviewdog
       shell: bash
@@ -42,8 +42,7 @@ runs:
           -f.diff.strip=1                \
           -name="markdownlint-fix"       \
           -reporter="github-pr-review"   \
-          -filter-mode="diff_context" \
-          -fail-level="error" < "${TMPFILE}"
+          -filter-mode="diff_context" < "${TMPFILE}"
         git stash drop || true
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ github.token }}
