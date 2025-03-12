@@ -9,10 +9,10 @@ runs:
       with:
         fetch-depth: 0
 
-    # - name: Setup reviewdog
-    #   uses: reviewdog/action-setup@v1
-    #   with:
-    #     reviewdog_version: latest
+    - name: Setup reviewdog
+      uses: reviewdog/action-setup@v1
+      with:
+        reviewdog_version: latest
 
     - name: Load super-linter configuration
       shell: bash
