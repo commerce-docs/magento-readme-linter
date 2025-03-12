@@ -33,8 +33,5 @@ runs:
       shell: bash
       run: |
         cat "super-linter-output/super-linter/super-linter-parallel-stderr-MARKDOWN" | reviewdog -efm="%f:%l:%c %m" -efm="%f:%l %m" -reporter=github-pr-check
-        # if [ -f "super-linter-output/super-linter/super-linter-parallel-stderr-MARKDOWN" ]; then
-        #   cat "super-linter-output/super-linter/super-linter-parallel-stderr-MARKDOWN" | reviewdog -efm="%f:%l:%c %m" -efm="%f:%l %m" -reporter=github-pr-check
-        # fi
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ github.token }}
