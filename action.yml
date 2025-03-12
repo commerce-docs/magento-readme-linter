@@ -32,10 +32,7 @@ runs:
     - name: Report linting results with reviewdog
       shell: bash
       run: |
-        ls . /
-        ls .. /
-        ls super-linter-output /
-        cat super-linter-output/super-linter
+        ls super-linter-output/super-linter
       # ls "${DEFAULT_WORKSPACE}/${SUPER_LINTER_OUTPUT_DIRECTORY_NAME}/"
       #   if [ -f "${DEFAULT_WORKSPACE}/${SUPER_LINTER_OUTPUT_DIRECTORY_NAME}/super-linter" ]; then
       #     cat "${DEFAULT_WORKSPACE}/${SUPER_LINTER_OUTPUT_DIRECTORY_NAME}/super-linter" | reviewdog -f=super-linter -reporter=github-pr-review -fail-on-error=false
