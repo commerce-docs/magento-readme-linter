@@ -33,7 +33,6 @@ runs:
     - name: Report linting results with reviewdog
       shell: bash
       run: |
-        ls super-linter-output/super-linter/
         TMPFILE=$(mktemp)
         git diff > "${TMPFILE}"
         cat "${TMPFILE}"
