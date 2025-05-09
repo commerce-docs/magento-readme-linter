@@ -22,15 +22,25 @@ runs:
         ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
         SAVE_SUPER_LINTER_OUTPUT: true
 
+    - name: Debug Super-Linter Output
+      if: always()
+      shell: bash
+      run: |
+        echo "=== Debug: Super-Linter Output Directory Contents ==="
+        if [ -d "$GITHUB_WORKSPACE/super-linter-output" ]; then
+          find "$GITHUB_WORKSPACE/super-linter-output" -type f -print | while read -r file; do
+            echo "=== Contents of ${file#$GITHUB_WORKSPACE/super-linter-output/} ==="
+            cat "$file"
+            echo ""
+          done
+        else
+          echo "super-linter-output directory not found"
+        fi
+
     - name: Add Markdown Linter Report to Job Summary
       if: failure()
       shell: bash
       run: |
-        echo "Contents of super-linter-output directory:" >> $GITHUB_STEP_SUMMARY
-        echo '```' >> $GITHUB_STEP_SUMMARY
-        ls -laR "$GITHUB_WORKSPACE/super-linter-output" >> $GITHUB_STEP_SUMMARY
-        echo '```' >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
         if [ -f "$GITHUB_WORKSPACE/super-linter-output/markdownlint.txt" ]; then
           echo "## Markdown Linter Report" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
