@@ -18,9 +18,6 @@ runs:
       uses: super-linter/super-linter/slim@v7.3.0
       env:
         GITHUB_TOKEN: ${{ github.token }}
-        MARKDOWN_CONFIG_FILE: .markdown-lint.yml
-        ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
-        SAVE_SUPER_LINTER_OUTPUT: true
 
     - name: Add Markdown Linter Report to Job Summary
       if: ${{ failure() && steps.lint.outcome == 'failure' }}
