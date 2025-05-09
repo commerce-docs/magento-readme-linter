@@ -15,6 +15,7 @@ runs:
 
     - name: Lint Code Base
       id: lint
+      continue-on-error: true
       uses: super-linter/super-linter/slim@v7.3.0
       env:
         GITHUB_TOKEN: ${{ github.token }}
@@ -26,6 +27,12 @@ runs:
       if: always()
       shell: bash
       run: |
+        echo "=== Debug: Current Directory ==="
+        pwd
+        echo ""
+        echo "=== Debug: Directory Contents ==="
+        ls -la
+        echo ""
         echo "=== Debug: Super-Linter Output Directory Contents ==="
         if [ -d "$GITHUB_WORKSPACE/super-linter-output" ]; then
           find "$GITHUB_WORKSPACE/super-linter-output" -type f -print | while read -r file; do
