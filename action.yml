@@ -15,7 +15,6 @@ runs:
 
     - name: Lint Code Base
       id: lint
-      continue-on-error: true
       uses: super-linter/super-linter/slim@v7.3.0
       env:
         GITHUB_TOKEN: ${{ github.token }}
@@ -23,29 +22,8 @@ runs:
         ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
         SAVE_SUPER_LINTER_OUTPUT: true
 
-    - name: Debug Super-Linter Output
-      if: always()
-      shell: bash
-      run: |
-        echo "=== Debug: Current Directory ==="
-        pwd
-        echo ""
-        echo "=== Debug: Directory Contents ==="
-        ls -la
-        echo ""
-        echo "=== Debug: Super-Linter Output Directory Contents ==="
-        if [ -d "$GITHUB_WORKSPACE/super-linter-output" ]; then
-          find "$GITHUB_WORKSPACE/super-linter-output" -type f -print | while read -r file; do
-            echo "=== Contents of ${file#$GITHUB_WORKSPACE/super-linter-output/} ==="
-            cat "$file"
-            echo ""
-          done
-        else
-          echo "super-linter-output directory not found"
-        fi
-
     - name: Add Markdown Linter Report to Job Summary
-      if: failure()
+      if: steps.lint.outcome == 'failure'
       shell: bash
       run: |
         if [ -f "$GITHUB_WORKSPACE/super-linter-output/super-linter/super-linter-parallel-stderr-MARKDOWN" ]; then
