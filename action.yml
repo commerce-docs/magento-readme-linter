@@ -14,6 +14,26 @@ runs:
       run: cat .github/super-linter.env >> "$GITHUB_ENV"
 
     - name: Lint Code Base
+      id: lint
       uses: super-linter/super-linter/slim@v7.3.0
       env:
-        GITHUB_TOKEN: ${{ github.token }} 
+        GITHUB_TOKEN: ${{ github.token }}
+        MARKDOWN_CONFIG_FILE: .markdown-lint.yml
+        ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
+        SAVE_SUPER_LINTER_OUTPUT: true
+
+    - name: Add Markdown Linter Report to Job Summary
+      if: failure()
+      shell: bash
+      run: |
+        echo "Contents of super-linter-output directory:" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        ls -laR "$GITHUB_WORKSPACE/super-linter-output" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        if [ -f "$GITHUB_WORKSPACE/super-linter-output/markdownlint.txt" ]; then
+          echo "## Markdown Linter Report" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat "$GITHUB_WORKSPACE/super-linter-output/markdownlint.txt" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+        fi
