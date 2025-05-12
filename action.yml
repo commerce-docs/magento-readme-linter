@@ -41,7 +41,4 @@ runs:
       if: ${{ failure() && steps.lint.outcome == 'failure' }}
       shell: bash
       run: |
-        JOB_ID=$(curl -s -H "Authorization: token ${{ github.token }}" \
-          "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs" \
-          | jq -r '.jobs[0].id')
-        echo "::error::For detailed linting results, see the Job Summary: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}#summary-$JOB_ID"
+        echo "::error::For detailed linting results, see the Job Summary: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
