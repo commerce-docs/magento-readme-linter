@@ -94,6 +94,12 @@ Each violation report includes:
 - Description of the violation
 - Expected and actual values
 
+When a check fails, you can find the detailed linting results in the Job Summary. To access it:
+
+1. Click on the failed check in your pull request
+2. In the error log view, click on the "Summary" tab at the top of the page
+3. Look for the "Markdown Linter Report" section
+
 For more information about the rules and how to fix violations, refer to the
 [markdownlint rules documentation](https://github.com/DavidAnson/markdownlint?tab=readme-ov-file#rules--aliases).
 

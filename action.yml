@@ -31,3 +31,9 @@ runs:
           sed 's|/github/workspace/||g' "$GITHUB_WORKSPACE/super-linter-output/super-linter/super-linter-parallel-stderr-MARKDOWN" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
         fi
+
+    - name: Add Job Summary Link to Error Log
+      if: ${{ failure() && steps.lint.outcome == 'failure' }}
+      shell: bash
+      run: |
+        echo "::error::For detailed linting results, see the Job Summary: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
