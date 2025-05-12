@@ -41,7 +41,10 @@ runs:
       if: ${{ failure() && steps.lint.outcome == 'failure' }}
       shell: bash
       run: |
-        echo "::error::"
-        echo "::error::📋 For brief linting results, see the Job Summary:"
-        echo "::error::🔗 ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-        echo "::error::"
+        echo ""
+        echo "============================================================"
+        echo "📋 For brief linting results, see the Job Summary:"
+        echo "🔗 ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        echo "============================================================"
+        echo ""
+        echo "::error::See the Job Summary for brief linting results: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
