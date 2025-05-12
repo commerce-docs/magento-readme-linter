@@ -1,6 +1,11 @@
 name: 'Readme Linter'
 description: 'Validates README files in modules using super-linter'
 
+permissions:
+  contents: read
+  checks: write
+  actions: read
+
 runs:
   using: "composite"
   steps:
@@ -36,4 +41,7 @@ runs:
       if: ${{ failure() && steps.lint.outcome == 'failure' }}
       shell: bash
       run: |
-        echo "::error::For detailed linting results, see the Job Summary: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}#summary-${{ github.job_id }}"
+        JOB_ID=$(curl -s -H "Authorization: token ${{ github.token }}" \
+          "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs" \
+          | jq -r '.jobs[0].id')
+        echo "::error::For detailed linting results, see the Job Summary: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}#summary-$JOB_ID"
