@@ -49,16 +49,9 @@ Note: The `FILTER_REGEX_INCLUDE` pattern should match your module locations. See
 [Configuration](#configuration) for examples of different repository structures.
 
 1. Create `.markdownlint.yml` with Markdown rules (conventionally placed in
-   `.github/linters/.markdownlint.yml`). You can use the
-   [Adobe Commerce Markdown rules](https://github.com/AdobeDocs/commerce-php/blob/main/.github/linters/.markdownlint.yml)
-   as a starting point:
-
-```yaml
-default: true
-MD013: false  # Line length
-MD033: false  # No inline HTML
-MD041: false  # First line in file should be a top level heading
-```
+   `.github/linters/.markdownlint.yml`). Use the rules from the Adobe Developer
+   [Commerce PHP](https://github.com/AdobeDocs/commerce-php/blob/main/.github/linters/.markdownlint.yml)
+   repository as a reference.
 
 See [Configuration](#configuration) for more details on customizing these files.
 
