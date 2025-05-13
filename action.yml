@@ -1,11 +1,6 @@
 name: 'Readme Linter'
 description: 'Validates README files in modules using super-linter'
 
-permissions:
-  contents: read
-  checks: write
-  actions: read
-
 runs:
   using: "composite"
   steps:
