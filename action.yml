@@ -14,6 +14,32 @@ runs:
       run: cat .github/super-linter.env >> "$GITHUB_ENV"
 
     - name: Lint Code Base
-      uses: super-linter/super-linter/slim@v7.2.1
+      id: lint
+      uses: super-linter/super-linter/slim@v7.3.0
       env:
-        GITHUB_TOKEN: ${{ github.token }} 
+        GITHUB_TOKEN: ${{ github.token }}
+        ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
+        SAVE_SUPER_LINTER_OUTPUT: true
+
+    - name: Add Markdown Linter Report to Job Summary
+      if: ${{ failure() && steps.lint.outcome == 'failure' }}
+      shell: bash
+      run: |
+        if [ -f "$GITHUB_WORKSPACE/super-linter-output/super-linter/super-linter-parallel-stderr-MARKDOWN" ]; then
+          echo "## Markdown Linter Report" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          sed 's|/github/workspace/||g' "$GITHUB_WORKSPACE/super-linter-output/super-linter/super-linter-parallel-stderr-MARKDOWN" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+        fi
+
+    - name: Add Job Summary Link to Error Log
+      if: ${{ failure() && steps.lint.outcome == 'failure' }}
+      shell: bash
+      run: |
+        echo ""
+        echo "============================================================"
+        echo "📋 For brief linting results, see the Job Summary:"
+        echo "🔗 ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        echo "============================================================"
+        echo ""
+        echo "::error::See the Job Summary for brief linting results: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
